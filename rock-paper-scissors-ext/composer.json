@@ -1,0 +1,8 @@
+{
+    "name": "algis.bernatovics/game-test",
+    "description": "game-test",
+    "require": {
+        "phpunit/phpunit": "^9.5",
+      "ext-readline": "*"
+    }
+}
