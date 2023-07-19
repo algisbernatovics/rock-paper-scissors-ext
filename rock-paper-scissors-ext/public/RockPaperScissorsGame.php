@@ -9,6 +9,7 @@ class RockPaperScissorsGame
     protected array $computerUsers;
     protected array $computerBots;
     protected const ROUNDS = 3;
+    protected const POINTS_TO_WIN = 2;
 
     public function __construct(array $computerUsers, array $computerBots, array $gameElements)
     {
@@ -30,7 +31,7 @@ class RockPaperScissorsGame
 
     public function playRounds(Player $user, Player $bot): void
     {
-        for ($round = 1; $round <= self::ROUNDS; $round++) {
+        for ($round = 0; $round < self::ROUNDS; $round++) {
             echo "Round: $round with {$bot->getName()}" . PHP_EOL;
             $this->setUserChoice($user);
             $this->setBotChoice($bot);
@@ -57,12 +58,9 @@ class RockPaperScissorsGame
     private function setUserChoice(Player $user)
     {
         $gameElementsCount = count($this->gameElements);
-        $this->printGameElements();
-        $choice = readline("{$user->getName()}, enter choice (1-$gameElementsCount): ");
         $range = range(1, $gameElementsCount);
-
+        $choice = 0;
         while (!in_array($choice, $range)) {
-            echo "Invalid choice. Please enter a number between 1 and $gameElementsCount." . PHP_EOL;
             $this->printGameElements();
             $choice = readline("{$user->getName()}, enter choice (1-$gameElementsCount): ");
         }
@@ -84,11 +82,8 @@ class RockPaperScissorsGame
 
     public function determineWinner(Player $user, Player $bot): void
     {
-        if ($user->getPoints() >= 2) {
-            $user->increaseWins();
-        } elseif ($bot->getPoints() >= 2) {
-            $bot->increaseWins();
-        }
+        $user->getPoints() >= self::POINTS_TO_WIN ? $user->increaseWins() : null;
+        $bot->getPoints() >= self::POINTS_TO_WIN ? $bot->increaseWins() : null;
         $user->resetPoints();
         $bot->resetPoints();
     }
@@ -98,23 +93,24 @@ class RockPaperScissorsGame
         foreach ($this->computerBots as $bot) {
             echo "{$bot->getName()} has {$bot->getWins()} win(s)." . PHP_EOL;
         }
-        echo PHP_EOL;
         foreach ($this->computerUsers as $user) {
             echo "{$user->getName()} has {$user->getWins()} win(s)." . PHP_EOL;
         }
-        echo PHP_EOL;
     }
 }
+
 //Ability to add more computer users.
 $computerUsers = [
     new Player('Captain Copy Paste'),
 ];
+
 //Ability to add more computer bots.
 $computerBots = [
     new Player('Facepalm (Bot)'),
     new Player('Master of Dynamite (Bot)'),
     new Player('Papercraft Ninja (Bot)'),
 ];
+
 //Ability to add more game elements.
 $gameElements = [
     1 => new GameElement('Dynamite', $beats = ['Scissors', 'Lizard', 'Spock', 'Rock', 'Paper']),
