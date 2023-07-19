@@ -105,17 +105,17 @@ class RockPaperScissorsGame
         echo PHP_EOL;
     }
 }
-
+//Ability to add more computer users.
 $computerUsers = [
     new Player('Captain Copy Paste'),
 ];
-
+//Ability to add more computer bots.
 $computerBots = [
     new Player('Facepalm (Bot)'),
     new Player('Master of Dynamite (Bot)'),
     new Player('Papercraft Ninja (Bot)'),
 ];
-
+//Ability to add more game elements.
 $gameElements = [
     1 => new GameElement('Dynamite', $beats = ['Scissors', 'Lizard', 'Spock', 'Rock', 'Paper']),
     2 => new GameElement('Rock', $beats = ['Scissors', 'Lizard']),
